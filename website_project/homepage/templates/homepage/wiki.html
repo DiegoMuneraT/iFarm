@@ -1,0 +1,100 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block title %} iFarm {% endblock %}
+<!--<link rel="stylesheet" href="{% static 'css/wiki.css' %}" type="text/css">!-->
+{% block body %}
+<div class="wrapper centered">
+    <div class="inner">
+        <div class="logo centered">
+            <img class="logo-image" width="200px" height="200px" src="/staticfiles/images/iFarmLogoB.png" alt="">
+        </div>
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Consulta a la Wiki">
+        </div>
+    </div>
+</div>
+
+<!--<script src="{% static 'js/wiki.js"></script>!-->
+<script type ="text/javascript">
+const searchInput = document.querySelector(".search-input");
+
+searchInput.addEventListener("keyup", function(e){
+    if(e.keyCode == 13){
+        var value=searchInput.value;
+        if(value){
+            window.location.href = "/read.html?" + value;
+        }
+    }
+})
+</script>
+
+<style type="text/css">
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.centered{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper{
+    height: 100vh;
+    width: 100%;
+}
+
+.logo{
+    margin-bottom: 50px;
+}
+
+.search-bar{
+    width: 500px;
+    padding: 20px 25px;
+    background-color: aquamarine;
+    border-radius: 10px;
+}
+
+.search-input{
+    background-color: transparent;
+    color: rgb(49, 49, 49);
+    width: 100%;
+    border: none;
+    outline-width: 0;
+    font-size: 19px;
+}
+
+/*read.html*/
+
+.read-wrapper{
+    width:100%;
+    min-height: 100vh;
+    display: flex;
+}
+
+.read-inner{
+    color: black;
+}
+
+.read-inner{
+    width: 800px;
+    margin-top: 100px;
+}
+
+.article-title{
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.article-description{
+    color: ghostwhite;
+    letter-spacing: 1px;
+    font-size: 20px;
+    line-height: 22px;
+}
+</style>
+{% endblock %}
+

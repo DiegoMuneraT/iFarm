@@ -1,0 +1,31 @@
+{% extends "./base.html" %}
+
+{% block title %} iFarm {% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+    <h2>{{ user.first_name | upper }}, así van tus cultivos</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for c in cultivos %}
+      <div class="col">
+        <div class="card h-100">
+          <img src="/staticfiles/images/{{c.imagen}}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Tu {{c.tipo}}</h5>
+            <p class="card-text">{{c.nombre}}, ha tenido un crecimiento normal, su estado es sano</p>
+            <p class="card-text">Humedad: 5% Temperatura: 23°</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">Ultima revisión hace 5 minutos</small>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+

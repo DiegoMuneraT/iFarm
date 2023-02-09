@@ -1,0 +1,107 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block title %} iFarm {% endblock %}
+<!--<link rel="stylesheet" href="{% static 'css/wiki.css' %}" type="text/css">!-->
+{% block body %}
+
+<div class="read-wrapper">
+    <div class="read-inner">
+        <div class="title">
+            <h1 class="article-title"></h1>
+        </div>
+        <div class="description">
+            <p class="article-description"></p>
+        </div>
+    </div>
+</div>
+<!--<script href="{% static 'js/wiki.js' %}"></script>!-->
+<script type ="text/javascript">
+const title_elem = document.querySelector(".article-title"),
+description_elem = document.querySelector(".article-description");
+    
+var search = window.location.search.substr(1);
+    
+if(search){
+    var api = "https://en.wikipedia.org/w/api.php?format=json&action=query&origin=*&prop=extracts&exintro&explaintext&redirects=1&titles=" + search;
+    fetch(api)
+    .then(response => response.json())
+    .then(response => {
+        response = response.query.pages;
+        var pageid = Object.keys(response)[0];
+        var extract = response[pageid].extract;
+            
+        title_elem.innerHTML = search;
+        description_elem.innerHTML = extract
+    })
+}
+</script>
+
+<style type="text/css">
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    .centered{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .wrapper{
+        height: 100vh;
+        width: 100%;
+    }
+    
+    .logo{
+        margin-bottom: 50px;
+    }
+    
+    .search-bar{
+        width: 500px;
+        padding: 20px 25px;
+        background-color: aquamarine;
+        border-radius: 10px;
+    }
+    
+    .search-input{
+        background-color: transparent;
+        color: rgb(49, 49, 49);
+        width: 100%;
+        border: none;
+        outline-width: 0;
+        font-size: 19px;
+    }
+    
+    /*read.html*/
+    
+    .read-wrapper{
+        width:100%;
+        min-height: 100vh;
+        display: flex;
+    }
+    
+    .read-inner{
+        color: black;
+    }
+    
+    .read-inner{
+        width: 800px;
+        margin-top: 100px;
+    }
+    
+    .article-title{
+        font-size: 50px;
+        margin-bottom: 20px;
+    }
+    
+    .article-description{
+        color: ghostwhite;
+        letter-spacing: 1px;
+        font-size: 20px;
+        line-height: 22px;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "./base.html" %}
+
+{% block title %} iFarm {% endblock %}
+
+{% block body %}
+
+<!-- FORM TO ADD NEW PLANTS-->
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        <h2>Nueva siembra</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registrarCultivo/" method="POST">{% csrf_token %} <!--Exploit from Django-->
+                    <div class="input-group mb-3">
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre" maxlength="50" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="text" id="txtTipo" name="txtTipo" class="form-control" placeholder="Tipo" maxlength="50" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input class="form-control form-control-sm" id="imgFoto" name="imgFoto" type="file">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABLE TO SHOW EXISTING PLANTS AND OPTIONS-->
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h2>{{ user.first_name | upper }}, tus cultivos</h2>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Imagen</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in  cultivos %}
+                    <tr>
+                        <td>{{c.nombre}}</td>
+                        <td>{{c.tipo}}</td>
+                        <td><img src="/staticfiles/images/{{c.imagen}}" alt="" width="50" height="50" class="d-inline-block align-text-top"></td>
+                        <td><a href="/activarRiego" class="btn btn-outline-success btn-sm">Activar Riego</a></td> <!-- /{{c.nombre}}-->
+                        <td><a href="/desactivarRiego" class="btn btn-outline-info btn-sm">Desactivar Riego</a></td>
+                        <td><a href="/modificarCultivo/{{c.nombre}}" class="btn btn-outline-warning btn-sm">Modificar</a></td>
+                        <td><a href="/eliminarCultivo/{{c.nombre}}" class="btn btn-outline-danger btn-sm">Eliminar</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
